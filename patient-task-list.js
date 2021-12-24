@@ -36,7 +36,7 @@ let fieldsArr = [
     [/calcium$/i, 'Cal'],
     [/parathyroid\s?hormone/i, 'PTHi'],
     [/vitamin d\,?\s?25\-(hydroxy|OH)/i, '25-HD'],
-    [/cortisol(\,? free)?$/i, 'Cortisol'],
+    [/cortisol(\,? total)?$/i, 'Cortisol'],
     [/acth, plasma/i, 'ACTH'],
     [/prolactin$/i, 'PRA'],
     [/(igf\-1\(bl\)|igf 1\,? lc\/ms)/i, 'IGF-1'],
