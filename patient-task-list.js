@@ -71,7 +71,7 @@ let abnormalFieldsSet = new Set([
     'ALT',
     'ALP',
     'Tbil',
-    'Na',
+    'NA',
     'K',
 ]);
 
