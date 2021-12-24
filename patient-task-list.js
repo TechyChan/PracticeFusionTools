@@ -10,6 +10,8 @@
 // @grant window.location
 // ==/UserScript==
 
+// https://raw.githubusercontent.com/TechyChan/PracticeFusionTools/main/patient-task-list.js
+
 let fieldsArr = [
     [/hemoglobin a1c$/i, 'A1C'],
     [/fructosamine/i, 'Fructosamine'],
