@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Practice Fusion Labs Autofill
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  lololol
 // @author       David Ding
 // @include      /^https?://.*practicefusion\.com/.*$/
@@ -36,7 +36,7 @@ let fieldsArr = [
     [/calcium$/i, 'Cal'],
     [/parathyroid\s?hormone/i, 'PTHi'],
     [/vitamin d\,?\s?25\-(hydroxy|OH)/i, '25-HD'],
-    [/cortisol$/i, 'Cortisol'],
+    [/cortisol(\,? free)?$/i, 'Cortisol'],
     [/acth, plasma/i, 'ACTH'],
     [/prolactin$/i, 'PRA'],
     [/(igf\-1\(bl\)|igf 1\,? lc\/ms)/i, 'IGF-1'],
