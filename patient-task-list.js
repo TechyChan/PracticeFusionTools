@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Practice Fusion Patient Task List
+// @name         Practice Fusion Labs Autofill
 // @namespace    http://tampermonkey.net/
-// @version      0.3
-// @description  try to take over the world!
-// @author       You
+// @version      0.4
+// @description  lololol
+// @author       David Ding
 // @include      /^https?://.*practicefusion\.com/.*$/
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant window.onurlchange
@@ -12,24 +12,66 @@
 
 let fieldsArr = [
     [/hemoglobin a1c$/i, 'A1C'],
+    [/fructosamine/i, 'Fructosamine'],
     [/hemoglobin$/i, 'Hgb'],
     [/creatinine$/i, 'Cr'],
-    [/calcium$/i, 'Cal'],
     [/(albumin|alb)\/(creatinine|creat) ratio/i, 'UMA/Cr'],
+    [/glutamic acid decarboxylase 65 ab/i, 'GAD65Ab'],
+    [/c-peptide/i, 'C-pep'],
     [/tsh$/i, 'TSH'],
     [/t4\,?\s?free/i, 'FT4'],
     [/triiodothyronine \(t3\)/i, 'T3'],
     [/T3\,? free$/i, 'FT3'],
+    [/tsi$/i, 'TSI'],
+    [/thyroid peroxidase (antibodies|\(tpo\) ab)/i, 'TPOAb'],
+    [/white blood cell count/i, 'WBC'],
+    [/thyroglobulin by ima/i, 'Tg'],
+    [/thyroglobulin by antibody/i, 'TgAb'],
+    [/ast \(sgot\)/i, 'AST'],
+    [/alt \(sgpt\)/i, 'ALT'],
+    [/alkaline phosphatase/i, 'ALP'],
+    [/bilirubin, total/i, 'Tbil'],
+    [/calcium$/i, 'Cal'],
+    [/parathyroid\s?hormone/i, 'PTHi'],
     [/vitamin d\,?\s?25\-(hydroxy|OH)/i, '25-HD'],
-    [/cholesterol,?\s?total$/i, 'Lipid'],
-    [/albumin$/i, 'Alb'],
-    [/testosterone\,? total/i, 'T'],
-    [/testosterone\,? free/i, 'FT'],
-    [/testosterone,?\s?bi/i, 'Bio T'],
+    [/cortisol$/i, 'Cortisol'],
+    [/acth, plasama/i, 'ACTH'],
     [/prolactin$/i, 'PRA'],
-    [/psa\,?\s?total$/i, 'PSA'],
-    [/parathyroid\s?hormone/i, 'PTHI'],
+    [/igf\-1\(bl\)/i, 'IGF-1'],
+    [/cholesterol,?\s?total$/i, 'Lipid'],
+    // [/albumin$/i, 'Alb'],
+    [/(testosterone\,? (total|serum)|^testosterone$)/i, 'T'],
+    [/(testosterone\,? free|free testosterone)/i, 'FT'],
+    [/testosterone,?\s?bi/i, 'Bio T'],
+    [/(psa\,?\s?total|prostate specific ag)/i, 'PSA'],
+    [/estradiol/i, 'Estradiol'],
+    [/dhea\-?\s?sulfate/i, 'DHEA-s'],
+    [/androstenedione/i, 'Androstenedione'],
+    [/fsh$/i, 'FSH'],
+    [/lh$/i, 'LH'],
+    [/sodium$/i, 'NA'],
+    [/potassium$/i, 'K'],
+    [/magnesium/i, 'Mg'],
+    [/phosphate \(as phosphorus\)/i, 'Phos'],
+    [/aldosterone\, lc\/ms/i, 'ALD'],
+    [/aldo\/pra ratio/i, 'ALD/PRA ratio'],
+    [/plasma renin activity\, lc\/ms\/ms/i, 'Renin activity'],
+    [/calcitonin$/i, 'Calcitonin'],
+    [/^cea$/i, 'CEA'],
+    [/17\-oh progesterone/i, '17-OH progesterone'],
+    [/beta\-hcg\, qualitative/i, 'pregnancy test'],
+    [/angiotensin\-1\-converting enzyme/i, 'ACE'],
+    [/vitamin d\, 1\,25dihydroxy/i, '1,25-DHVD'],
 ];
+
+let abnormalFieldsSet = new Set([
+    'AST',
+    'ALT',
+    'ALP',
+    'Tbil',
+    'Na',
+    'K',
+]);
 
 function rafAsync() {
     return new Promise(resolve => {
@@ -141,9 +183,20 @@ async function patientView() {
 
                 continue;
             }
+
+            if (abnormalFieldsSet.has(fieldAbbr)) {
+                let fieldValueIcon = fieldLabel?.parentNode.parentNode.querySelector('[data-element=observation-value] [data-element=abnormal-icon]');
+
+                if (!fieldValueIcon) {
+                    // if this field does not have an abnormal indicator, then skip it
+                    continue;
+                }
+            }
     
             resultStr += `${fieldAbbr} ${fieldValue}, `;
         }
+
+
         if (resultStr[resultStr.length - 1] === ' ') {
             resultStr = resultStr.slice(0, resultStr.length - 2);
         }
