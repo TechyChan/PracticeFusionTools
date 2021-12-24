@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Practice Fusion Labs Autofill
 // @namespace    http://tampermonkey.net/
-// @version      0.7
+// @version      0.8
 // @description  lololol
 // @author       David Ding
 // @include      /^https?://.*practicefusion\.com/.*$/
