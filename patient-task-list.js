@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Practice Fusion Labs Autofill
 // @namespace    http://tampermonkey.net/
-// @version      0.9
+// @version      0.91
 // @description  lololol
 // @author       David Ding
 // @include      /^https?://.*practicefusion\.com/.*$/
@@ -191,8 +191,8 @@ async function patientView() {
                 let antibodyLabel = allFieldLabels.find(el => /endomysial antibody/i.test(el.textContent.trim()));
                 let glutamicAcidLabel = allFieldLabels.find(el => /glutamic acid decarboxylase|t-transglutaminase \(ttg\)/i.test(el.textContent.trim()));
 
-                let antibodyValue = antibodyLabel?.parentNode.parentNode.querySelector('[data-element=observation-value]').textContent.trim();
-                let glutamicAcidValue = glutamicAcidLabel?.parentNode.parentNode.querySelector('[data-element=observation-value]').textContent.trim();
+                let antibodyValue = antibodyLabel?.parentNode.parentNode.querySelector('[data-element=observation-value]').textContent.trim().toLowerCase();
+                let glutamicAcidValue = glutamicAcidLabel?.parentNode.parentNode.querySelector('[data-element=observation-value]').textContent.trim().toLowerCase();
 
                 fieldValue = 'negative';
 
