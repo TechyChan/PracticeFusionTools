@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Practice Fusion Labs Autofill
 // @namespace    http://tampermonkey.net/
-// @version      0.8
+// @version      0.9
 // @description  lololol
 // @author       David Ding
 // @include      /^https?://.*practicefusion\.com/.*$/
@@ -64,6 +64,7 @@ let fieldsArr = [
     [/beta\-hcg\, qualitative/i, 'pregnancy test'],
     [/angiotensin\-1\-converting enzyme/i, 'ACE'],
     [/vitamin d\, 1\,25dihydroxy/i, '1,25-DHVD'],
+    [/endomysial antibody|glutamic acid decarboxylase|t-transglutaminase \(ttg\)/i, 'Celiac screen'],
 ];
 
 let abnormalFieldsSet = new Set([
@@ -150,11 +151,11 @@ async function patientView() {
             if (fieldAbbr === 'Cr') {
                 // special casing for creatinine
 
-                let nonAFLabel = allFieldLabels.find(el => /eGFR NON-AFR\.? AMERICAN/i.test(el.textContent.trim()));
+                let nonAFLabel = allFieldLabels.find(el => /eGFR NON-AFR\.? AMERICAN|eGFR If NonAfricn/i.test(el.textContent.trim()));
                 let nonAFValueIcon = nonAFLabel?.parentNode.parentNode.querySelector('[data-element=observation-value] [data-element=abnormal-icon]');
                 let nonAFValue = nonAFLabel?.parentNode.parentNode.querySelector('[data-element=observation-value]').textContent.trim();
 
-                let AFLabel = allFieldLabels.find(el => /eGFR AFRICAN AMERICAN/i.test(el.textContent.trim()));
+                let AFLabel = allFieldLabels.find(el => /eGFR AFRICAN AMERICAN|eGFR If Africn Am/i.test(el.textContent.trim()));
                 let AFValueIcon = AFLabel?.parentNode.parentNode.querySelector('[data-element=observation-value] [data-element=abnormal-icon]');
                 let AFValue = AFLabel?.parentNode.parentNode.querySelector('[data-element=observation-value]').textContent.trim();
 
@@ -184,6 +185,20 @@ async function patientView() {
                 resultStr = resultStr.slice(0, resultStr.length - 1) + ', ';
 
                 continue;
+            }
+
+            if (fieldAbbr === 'Celiac screen') {
+                let antibodyLabel = allFieldLabels.find(el => /endomysial antibody/i.test(el.textContent.trim()));
+                let glutamicAcidLabel = allFieldLabels.find(el => /glutamic acid decarboxylase|t-transglutaminase \(ttg\)/i.test(el.textContent.trim()));
+
+                let antibodyValue = antibodyLabel?.parentNode.parentNode.querySelector('[data-element=observation-value]').textContent.trim();
+                let glutamicAcidValue = glutamicAcidLabel?.parentNode.parentNode.querySelector('[data-element=observation-value]').textContent.trim();
+
+                fieldValue = 'negative';
+
+                if (antibodyValue == 'positive' || glutamicAcidValue == 'positive') {
+                    fieldValue = 'positive';
+                }
             }
 
             if (abnormalFieldsSet.has(fieldAbbr)) {
