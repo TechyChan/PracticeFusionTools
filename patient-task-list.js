@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Practice Fusion Labs Autofill
 // @namespace    http://tampermonkey.net/
-// @version      0.91
+// @version      0.92
 // @description  lololol
 // @author       David Ding
 // @include      /^https?://.*practicefusion\.com/.*$/
@@ -62,8 +62,8 @@ let fieldsArr = [
     [/^cea$/i, 'CEA'],
     [/17\-oh progesterone/i, '17-OH progesterone'],
     [/beta\-hcg\, qualitative/i, 'pregnancy test'],
-    [/angiotensin\-1\-converting enzyme/i, 'ACE'],
-    [/vitamin d\, 1\,25dihydroxy/i, '1,25-DHVD'],
+    [/angiotensin\-1/i, 'ACE'],
+    [/vitamin d\s?\,?\s?1\s?\,\s?25dihydroxy|vitamin d\,?\s?1\,25\s?\(oh\)2\,?\s?total/i, '1,25-DHVD'],
     [/endomysial antibody|glutamic acid decarboxylase|t-transglutaminase \(ttg\)/i, 'Celiac screen'],
 ];
 
