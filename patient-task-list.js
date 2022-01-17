@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Practice Fusion Labs Autofill
 // @namespace    http://tampermonkey.net/
-// @version      0.92
+// @version      1.0
 // @description  lololol
 // @author       David Ding
 // @include      /^https?://.*practicefusion\.com/.*$/
@@ -18,30 +18,30 @@ let fieldsArr = [
     [/hemoglobin$/i, 'Hgb'],
     [/creatinine$/i, 'Cr'],
     [/(albumin|alb)\/(creatinine|creat) ratio/i, 'UMA/Cr'],
-    [/glutamic acid decarboxylase 65 ab/i, 'GAD65Ab'],
+    [/glutamic acid decarboxylase 65 ab|GAD-65/i, 'GAD65Ab'],
     [/c-peptide/i, 'C-pep'],
     [/tsh$/i, 'TSH'],
     [/t4\,?\s?free/i, 'FT4'],
-    [/triiodothyronine \(t3\)/i, 'T3'],
+    [/t3\, total|triiodothyronine \(t3\)/i, 'T3'],
     [/T3\,? free$/i, 'FT3'],
-    [/tsi$/i, 'TSI'],
+    [/tsi|thyroid stim immunoglobulin$/i, 'TSI'],
     [/thyroid peroxidase (antibodies|\(tpo\) ab)/i, 'TPOAb'],
-    [/white blood cell count/i, 'WBC'],
-    [/thyroglobulin by ima/i, 'Tg'],
-    [/thyroglobulin by antibody/i, 'TgAb'],
-    [/ast \(sgot\)/i, 'AST'],
-    [/alt \(sgpt\)/i, 'ALT'],
+    [/white blood cell count|wbc/i, 'WBC'],
+    [/thyroglobulin|thyroglobulin by ima/i, 'Tg'],
+    [/thyroglobulin (by\s)?antibody/i, 'TgAb'],
+    [/ast\(\ssgot\)?/i, 'AST'],
+    [/alt\(\ssgpt\)?/i, 'ALT'],
     [/alkaline phosphatase/i, 'ALP'],
     [/bilirubin, total/i, 'Tbil'],
     [/calcium$/i, 'Cal'],
-    [/parathyroid\s?hormone/i, 'PTHi'],
+    [/parathyroid\s?hormone|pth\, intact/i, 'PTHi'],
     [/vitamin d\,?\s?25\-(hydroxy|OH)/i, '25-HD'],
-    [/cortisol(\,? total)?$/i, 'Cortisol'],
+    [/cortisol\, total|cortisol \- am/i, 'Cortisol'],
     [/acth, plasma/i, 'ACTH'],
-    [/prolactin$/i, 'PRA'],
+    [/prolactin(\, undiluted)?$/i, 'PRL'],
     [/(igf\-1\(bl\)|igf 1\,? lc\/ms)/i, 'IGF-1'],
     [/cholesterol,?\s?total$/i, 'Lipid'],
-    // [/albumin$/i, 'Alb'],
+    [/albumin$/i, 'Alb'],
     [/(testosterone\,? (total|serum)|^testosterone$)/i, 'T'],
     [/(testosterone\,? free|free testosterone)/i, 'FT'],
     [/testosterone,?\s?bi/i, 'Bio T'],
@@ -74,6 +74,7 @@ let abnormalFieldsSet = new Set([
     'Tbil',
     'NA',
     'K',
+    'Alb',
 ]);
 
 function rafAsync() {
@@ -131,10 +132,10 @@ async function patientView() {
     autoFillBtn.addEventListener('click', async () => {
         let commentsField = autoFillBtn.previousElementSibling.querySelector('*:last-child');
 
-        let collectedDateField = Array.from(document.querySelectorAll('label'))
-            .find(el => /collected date/i.test(el.textContent))?.nextElementSibling;
+        let reportDateField = Array.from(document.querySelectorAll('label'))
+            .find(el => /report date/i.test(el.textContent))?.nextElementSibling;
     
-        let dateMatch = collectedDateField?.textContent?.match(/(\d\d\/\d\d\/)(\d{4})/);
+        let dateMatch = reportDateField?.textContent?.match(/(\d\d\/\d\d\/)(\d{4})/);
         let collectedDateVal = dateMatch[1] + dateMatch[2].slice(2);
     
         await commentsField.click();
