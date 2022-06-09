@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Practice Fusion Labs Autofill
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  lololol
 // @author       David Ding
 // @include      /^https?://.*practicefusion\.com/.*$/
@@ -27,10 +27,10 @@ let fieldsArr = [
   [/tsi|thyroid stim immunoglobulin$/i, 'TSI'],
   [/thyroid peroxidase (antibodies|\(tpo\) ab)/i, 'TPOAb'],
   [/white blood cell count|wbc/i, 'WBC'],
-  [/thyroglobulin|thyroglobulin by ima/i, 'Tg'],
-  [/thyroglobulin (by\s)?antibody/i, 'TgAb'],
-  [/ast\(\ssgot\)?/i, 'AST'],
-  [/alt\(\ssgpt\)?/i, 'ALT'],
+  [/thyroglobulin$|thyroglobulin by ima$/i, 'Tg'],
+  [/thyroglobulin (by\s)?antibody$/i, 'TgAb'],
+  [/ast(\s\(sgot\))?/i, 'AST'],
+  [/alt(\s\(sgpt\))?/i, 'ALT'],
   [/alkaline phosphatase/i, 'ALP'],
   [/bilirubin, total/i, 'Tbil'],
   [/calcium$/i, 'Cal'],
@@ -69,7 +69,7 @@ let fieldsArr = [
     '1,25-DHVD',
   ],
   [
-    /endomysial antibody|glutamic acid decarboxylase|t-transglutaminase \(ttg\)/i,
+    /(endomysial antibody)|(glutamic acid decarboxylase)|(t-transglutaminase \(ttg\))/i,
     'Celiac screen',
   ],
   [/vitamin b12/i, 'B12'],
@@ -201,8 +201,23 @@ async function patientView() {
           '[data-element=observation-value]'
         )?.textContent.trim();
 
+        let genericLabel = allFieldLabels.find((el) =>
+          /eGFR$/i.test(el.textContent.trim())
+        );
+        let genericValueIcon = getValueElByLabel(
+          genericLabel,
+          '[data-element=observation-value] [data-element=abnormal-icon]'
+        );
+        let genericValue = getValueElByLabel(
+          genericLabel,
+          '[data-element=observation-value]'
+        )?.textContent.trim();
+
         if (nonAFValueIcon || AFValueIcon) {
           resultStr += `${fieldAbbr} ${fieldValue}/GFR ${nonAFValue}-${AFValue}, `;
+          continue;
+        } else if (genericValueIcon) {
+          resultStr += `${fieldAbbr} ${fieldValue}/GFR ${genericValue}, `;
           continue;
         }
       }
