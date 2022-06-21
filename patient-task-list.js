@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Practice Fusion Labs Autofill
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      2.2
 // @description  lololol
 // @author       David Ding
 // @include      /^https?://.*practicefusion\.com/.*$/
@@ -251,10 +251,10 @@ async function patientView() {
 
       if (fieldAbbr === 'Celiac screen') {
         let antibodyLabel = allFieldLabels.find((el) =>
-          /endomysial antibody/i.test(el.textContent.trim())
+          /endomysial antibody.*iga/i.test(el.textContent.trim())
         );
         let glutamicAcidLabel = allFieldLabels.find((el) =>
-          /glutamic acid decarboxylase|t-transglutaminase \(ttg\)/i.test(
+          /tissue transglutaminase|t-transglutaminase \(ttg\)/i.test(
             el.textContent.trim()
           )
         );
