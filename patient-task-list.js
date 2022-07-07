@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Practice Fusion Labs Autofill
 // @namespace    http://tampermonkey.net/
-// @version      2.2
+// @version      2.3
 // @description  lololol
 // @author       David Ding
 // @include      /^https?://.*practicefusion\.com/.*$/
@@ -144,7 +144,7 @@ async function patientView() {
     let commentsField =
       autoFillBtn.previousElementSibling.querySelector('*:last-child');
 
-    let reportDateField = Array.from(document.querySelectorAll('label')).find(
+    let reportDateField = Array.from(document.querySelectorAll('td')).find(
       (el) => /report date/i.test(el.textContent)
     )?.nextElementSibling;
 
@@ -305,8 +305,8 @@ async function patientView() {
     }
 
     let commentsTextArea = await checkElement('.result-comment textarea');
-    commentsTextArea.value = resultStr;
     commentsTextArea.focus();
+    commentsTextArea.value = resultStr;
 
     // can't blur right away, it seems
     setTimeout(() => {
