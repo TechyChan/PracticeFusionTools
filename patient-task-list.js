@@ -133,7 +133,7 @@ async function patientView() {
   autoFillBtn.innerHTML = 'Autofill (overwrite)';
   autoFillBtn.style.cssText = `
         padding: 4px 8px;
-        border-radius: 4px;
+        border-radius: 8px;
         margin-top: 8px;
         background-color: #5c96c4;
         color: white;
