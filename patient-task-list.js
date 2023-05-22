@@ -22,6 +22,8 @@ let fieldsArr = [
   [/c-peptide/i, 'C-pep'],
   [/tsh$/i, 'TSH'],
   [/t4\,?\s?free/i, 'FT4'],
+  [/t4(\s\(thyroxine\)), total/i, 'T4'],
+  [/thyroglobulin(, lc\/ms\/ms)?/i, 'Tg'],
   [/t3\, total|triiodothyronine \(t3\)$/i, 'T3'],
   [/T3\,? free|triiodothyronine \(t3\), free$/i, 'FT3'],
   [/tsi|thyroid stim immunoglobulin$/i, 'TSI'],
@@ -63,9 +65,9 @@ let fieldsArr = [
   [/^cea$/i, 'CEA'],
   [/17\-oh progesterone/i, '17-OH progesterone'],
   [/beta\-hcg\, qualitative/i, 'pregnancy test'],
-  [/angiotensin\-1/i, 'ACE'],
+  [/angiotensin\-1|ace\,? serum/i, 'ACE'],
   [
-    /vitamin d\s?\,?\s?1\s?\,\s?25dihydroxy|vitamin d\,?\s?1\,25\s?\(oh\)2\,?\s?total/i,
+    /vitamin d\s?\,?\s?1\s?\,\s?25dihydroxy|vitamin d\,?\s?1\,25\s?\(oh\)2\,?\s?total|calcitriol\(?1\,?25\s?di\-oh\svit\sD\)/i,
     '1,25-DHVD',
   ],
   [
