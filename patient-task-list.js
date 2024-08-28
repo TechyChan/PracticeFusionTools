@@ -53,7 +53,6 @@ let fieldsArr = [
   [/estradiol/i, 'Estradiol'],
   [/dhea\-?\s?sulfate/i, 'DHEA-s'],
   [/androstenedione/i, 'Androstenedione'],
-  [/fsh$/i, 'FSH'],
   [/lh$/i, 'LH'],
   [/sodium$/i, 'NA'],
   [/potassium$/i, 'K'],
