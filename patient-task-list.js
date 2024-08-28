@@ -39,7 +39,7 @@ let fieldsArr = [
   [/parathyroid\s?hormone|pth\, intact/i, 'PTHi'],
   [/vitamin d\,?\s?25\-(hydroxy|OH)/i, '25-HD'],
   [/cortisol\, total|cortisol \-|\, am|A.M./i, 'Cortisol'],
-  [/Cortisol, A.M.$/i, "Cortisol"],
+  [/cortisol, A\.M\.$/i, "Cortisol"],
   [/acth, plasma/i, 'ACTH'],
   [/prolactin(\, undiluted)?$/i, 'PRL'],
   [/(igf\-1\(bl\)|igf 1\,? lc\/ms)/i, 'IGF-1'],
