@@ -75,6 +75,8 @@ let fieldsArr = [
     'Celiac screen',
   ],
   [/vitamin b12/i, 'B12'],
+  [/PTHrP \(PTH-Related Peptide\)/i, 'PTHrp'],
+  [/Calcitriol\(1,25 di-OH Vit D\)/i, '1,25-DHVD']
 ];
 
 let abnormalFieldsSet = new Set(['AST', 'ALT', 'ALP', 'Tbil', 'NA', 'K']);
@@ -82,6 +84,8 @@ let abnormalFieldsSet = new Set(['AST', 'ALT', 'ALP', 'Tbil', 'NA', 'K']);
 let customComparatorFieldsMap = {
   Alb: (str) => new Number(str) < 4,
 };
+
+
 
 function rafAsync() {
   return new Promise((resolve) => {
